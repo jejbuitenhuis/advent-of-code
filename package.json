@@ -1,0 +1,9 @@
+{
+  "name": "day-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "esm": "^3.2.25"
+  }
+}
