@@ -14,13 +14,13 @@ for (let i = 0; i < 26; i++)
 	CHARACTER_PRIORITIES[ String.fromCharCode(65 /* A */ + i) ] = i + 26 + 1;
 
 const totalPriority = data.split("\n")
-	.filter( s => !!s.trim() )
-	.map( s => [
-		s.slice( 0, s.length / 2 ).split(""),
-		s.slice( s.length / 2, s.length ).split(""),
+	.filter( line => !!line.trim() )
+	.map( line => [
+		line.slice( 0, line.length / 2 ).split(""),
+		line.slice( line.length / 2, line.length ).split(""),
 	] )
-	.map( ([ a, b ]) => a.filter( i => b.includes(i) )[0] )
-	.map( c => CHARACTER_PRIORITIES[c] )
-	.reduce( (acc, curr) => acc + curr, 0 );
+	.map( ([ left, right ]) => left.filter( char => right.includes(char) )[0] )
+	.map( char => CHARACTER_PRIORITIES[char] )
+	.reduce( (acc, currChar) => acc + currChar, 0 );
 
 console.log(totalPriority);

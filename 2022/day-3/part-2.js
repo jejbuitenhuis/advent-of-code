@@ -14,8 +14,8 @@ for (let i = 0; i < 26; i++)
 	CHARACTER_PRIORITIES[ String.fromCharCode(65 /* A */ + i) ] = i + 26 + 1;
 
 const totalPriority = data.split("\n")
-	.filter( s => !!s.trim() )
-	.reduce( (acc, curr) => {
+	.filter( line => !!line.trim() )
+	.reduce( (acc, currLine) => {
 		const newAcc = [ ...acc ];
 		let last = newAcc[newAcc.length - 1] || [];
 
@@ -24,12 +24,14 @@ const totalPriority = data.split("\n")
 			last = newAcc[newAcc.length - 1];
 		}
 
-		newAcc[newAcc.length - 1][last.length] = curr.split("");
+		newAcc[newAcc.length - 1][last.length] = currLine.split("");
 
 		return newAcc;
 	}, [] )
-	.map( ([ a, b, c ]) => a.filter( i => b.includes(i) && c.includes(i) )[0] )
-	.map( c => CHARACTER_PRIORITIES[c] )
-	.reduce( (acc, curr) => acc + curr, 0 );
+	.map( ([ left, middle, right ]) =>
+		left.filter( char => middle.includes(char) && right.includes(char) )[0]
+	)
+	.map( char => CHARACTER_PRIORITIES[char] )
+	.reduce( (acc, currChar) => acc + currChar, 0 );
 
 console.log(totalPriority);

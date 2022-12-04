@@ -6,18 +6,18 @@ const FILE = "input.txt";
 const data = readFileSync( pathJoin(__dirname, FILE) )
 	.toString();
 const overlappingSections = data.split("\n")
-	.filter( l => !!l.trim() )
-	.map( l => l.split(",") )
-	.map( l => l.map( r => r.split("-") ) )
-	.map( l => l.map( r => r.map( s => parseInt(s) ) ) )
-	.map( l => l.map( ([ start, end ]) =>
+	.filter( line => !!line.trim() )
+	.map( line => line.split(",") )
+	.map( line => line.map( range => range.split("-") ) )
+	.map( line => line.map( range => range.map( num => parseInt(num) ) ) )
+	.map( line => line.map( ([ start, end ]) =>
 		// + 1 because the range is inclusive
 		Array.from( { length: end - start + 1 }, (_, i) => start + i )
 	) )
-	.map( ([ r1, r2 ]) => ([
-		r1.some( n => r2.includes(n) ),
-		r2.some( n => r1.includes(n) ),
+	.map( ([ range1, range2 ]) => ([
+		range1.some( num => range2.includes(num) ),
+		range2.some( num => range1.includes(num) ),
 	]) )
-	.filter( ([ a, b ]) => a || b );
+	.filter( ([ inclRange1, inclRange2 ]) => inclRange1 || inclRange2 );
 
 console.log(overlappingSections.length);
